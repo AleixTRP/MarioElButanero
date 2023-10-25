@@ -16,8 +16,7 @@ public class SpawnObjects : MonoBehaviour
     private void Update()
     {
         // Comprueba si se presionan los botones R1 y L1 al mismo tiempo en el mando.
-        if (Gamepad.current != null &&
-            Gamepad.current.rightShoulder.isPressed && Gamepad.current.leftShoulder.isPressed)
+        if (Input_Manager._INPUT_MANAGER.GetSpawnPress())
         {
             if (!buttonsPressed)
             {

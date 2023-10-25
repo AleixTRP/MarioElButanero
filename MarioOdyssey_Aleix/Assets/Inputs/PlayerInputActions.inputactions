@@ -24,12 +24,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Spawn",
+                    "name": "Capy",
                     "type": "Button",
                     "id": "883aca7c-0c4a-4a4f-adb8-9418f2ab153d",
                     "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Press",
                     "initialStateCheck": false
                 },
                 {
@@ -48,6 +48,15 @@
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Spawn",
+                    "type": "Button",
+                    "id": "516259a1-4cf1-481d-9e17-a2d7d1bf9f74",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "Tap",
                     "initialStateCheck": false
                 }
             ],
@@ -142,23 +151,12 @@
                 },
                 {
                     "name": "",
-                    "id": "1e754f52-cbe9-403a-bca5-2e19a8e18b6b",
-                    "path": "<Gamepad>/rightShoulder",
+                    "id": "d357c6e2-165a-4feb-a1e1-0973a6720760",
+                    "path": "<Keyboard>/f",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Spawn",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "e426d5fe-b842-4366-bd25-e6b33381746b",
-                    "path": "<Gamepad>/leftShoulder",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Spawn",
+                    "action": "Capy",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -169,18 +167,7 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Spawn",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "d357c6e2-165a-4feb-a1e1-0973a6720760",
-                    "path": "<Keyboard>/f",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "",
-                    "action": "Spawn",
+                    "action": "Capy",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -214,6 +201,28 @@
                     "processors": "",
                     "groups": "",
                     "action": "Crouch",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "4de981fc-367d-47ab-aade-3b8d7d4f9541",
+                    "path": "<Gamepad>/leftShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spawn",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "08d3df24-7a1e-4907-809f-0cbaa79a3111",
+                    "path": "<Gamepad>/rightShoulder",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Spawn",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

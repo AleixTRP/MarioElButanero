@@ -46,12 +46,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Spawn"",
+                    ""name"": ""Capy"",
                     ""type"": ""Button"",
                     ""id"": ""883aca7c-0c4a-4a4f-adb8-9418f2ab153d"",
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
-                    ""interactions"": """",
+                    ""interactions"": ""Press"",
                     ""initialStateCheck"": false
                 },
                 {
@@ -70,6 +70,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Spawn"",
+                    ""type"": ""Button"",
+                    ""id"": ""516259a1-4cf1-481d-9e17-a2d7d1bf9f74"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
                 }
             ],
@@ -164,23 +173,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""1e754f52-cbe9-403a-bca5-2e19a8e18b6b"",
-                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""id"": ""d357c6e2-165a-4feb-a1e1-0973a6720760"",
+                    ""path"": ""<Keyboard>/f"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Spawn"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""e426d5fe-b842-4366-bd25-e6b33381746b"",
-                    ""path"": ""<Gamepad>/leftShoulder"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Spawn"",
+                    ""action"": ""Capy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -191,18 +189,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Spawn"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""d357c6e2-165a-4feb-a1e1-0973a6720760"",
-                    ""path"": ""<Keyboard>/f"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Spawn"",
+                    ""action"": ""Capy"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
@@ -238,6 +225,28 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Crouch"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4de981fc-367d-47ab-aade-3b8d7d4f9541"",
+                    ""path"": ""<Gamepad>/leftShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""08d3df24-7a1e-4907-809f-0cbaa79a3111"",
+                    ""path"": ""<Gamepad>/rightShoulder"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Spawn"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -248,9 +257,10 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Character = asset.FindActionMap("Character", throwIfNotFound: true);
         m_Character_Move = m_Character.FindAction("Move", throwIfNotFound: true);
         m_Character_Jump = m_Character.FindAction("Jump", throwIfNotFound: true);
-        m_Character_Spawn = m_Character.FindAction("Spawn", throwIfNotFound: true);
+        m_Character_Capy = m_Character.FindAction("Capy", throwIfNotFound: true);
         m_Character_Camera = m_Character.FindAction("Camera", throwIfNotFound: true);
         m_Character_Crouch = m_Character.FindAction("Crouch", throwIfNotFound: true);
+        m_Character_Spawn = m_Character.FindAction("Spawn", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -314,18 +324,20 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private List<ICharacterActions> m_CharacterActionsCallbackInterfaces = new List<ICharacterActions>();
     private readonly InputAction m_Character_Move;
     private readonly InputAction m_Character_Jump;
-    private readonly InputAction m_Character_Spawn;
+    private readonly InputAction m_Character_Capy;
     private readonly InputAction m_Character_Camera;
     private readonly InputAction m_Character_Crouch;
+    private readonly InputAction m_Character_Spawn;
     public struct CharacterActions
     {
         private @PlayerInputActions m_Wrapper;
         public CharacterActions(@PlayerInputActions wrapper) { m_Wrapper = wrapper; }
         public InputAction @Move => m_Wrapper.m_Character_Move;
         public InputAction @Jump => m_Wrapper.m_Character_Jump;
-        public InputAction @Spawn => m_Wrapper.m_Character_Spawn;
+        public InputAction @Capy => m_Wrapper.m_Character_Capy;
         public InputAction @Camera => m_Wrapper.m_Character_Camera;
         public InputAction @Crouch => m_Wrapper.m_Character_Crouch;
+        public InputAction @Spawn => m_Wrapper.m_Character_Spawn;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -341,15 +353,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Jump.started += instance.OnJump;
             @Jump.performed += instance.OnJump;
             @Jump.canceled += instance.OnJump;
-            @Spawn.started += instance.OnSpawn;
-            @Spawn.performed += instance.OnSpawn;
-            @Spawn.canceled += instance.OnSpawn;
+            @Capy.started += instance.OnCapy;
+            @Capy.performed += instance.OnCapy;
+            @Capy.canceled += instance.OnCapy;
             @Camera.started += instance.OnCamera;
             @Camera.performed += instance.OnCamera;
             @Camera.canceled += instance.OnCamera;
             @Crouch.started += instance.OnCrouch;
             @Crouch.performed += instance.OnCrouch;
             @Crouch.canceled += instance.OnCrouch;
+            @Spawn.started += instance.OnSpawn;
+            @Spawn.performed += instance.OnSpawn;
+            @Spawn.canceled += instance.OnSpawn;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -360,15 +375,18 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Jump.started -= instance.OnJump;
             @Jump.performed -= instance.OnJump;
             @Jump.canceled -= instance.OnJump;
-            @Spawn.started -= instance.OnSpawn;
-            @Spawn.performed -= instance.OnSpawn;
-            @Spawn.canceled -= instance.OnSpawn;
+            @Capy.started -= instance.OnCapy;
+            @Capy.performed -= instance.OnCapy;
+            @Capy.canceled -= instance.OnCapy;
             @Camera.started -= instance.OnCamera;
             @Camera.performed -= instance.OnCamera;
             @Camera.canceled -= instance.OnCamera;
             @Crouch.started -= instance.OnCrouch;
             @Crouch.performed -= instance.OnCrouch;
             @Crouch.canceled -= instance.OnCrouch;
+            @Spawn.started -= instance.OnSpawn;
+            @Spawn.performed -= instance.OnSpawn;
+            @Spawn.canceled -= instance.OnSpawn;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -390,8 +408,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     {
         void OnMove(InputAction.CallbackContext context);
         void OnJump(InputAction.CallbackContext context);
-        void OnSpawn(InputAction.CallbackContext context);
+        void OnCapy(InputAction.CallbackContext context);
         void OnCamera(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
+        void OnSpawn(InputAction.CallbackContext context);
     }
 }

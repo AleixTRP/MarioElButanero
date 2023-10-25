@@ -8,73 +8,65 @@ public class SpawnCapy : MonoBehaviour
 {
     [SerializeField]
     private GameObject objectToSpawn; // El objeto que se spawneará.
+
+
+    private GameObject spawnedObject; // Almacena la referencia al objeto spawnado.
+   
+    private float spawnTime; // Tiempo de creación del objeto
+   
     [SerializeField]
-    private float destroyDelay = 5f; // Tiempo en segundos antes de destruir el objeto.
-
-    private bool buttonsPressed = false;
-
-    [SerializeField]
-    private Vector3 vc = new Vector3 (0, 0, 3);
-
-
-    [SerializeField]
-    private Vector3 imapct = new Vector3(0, 1, 0);
+    private Vector3 vc = new Vector3(0, 0, 3);
 
     [SerializeField]
     private CharacterController characterController;
 
+    private Vector3 bounceDirection = Vector3.up;
+   
+    [SerializeField]
+    private float bounceForce = 20f;
+
+    [SerializeField]
+    private float destroyDelay = 5f; // Tiempo en segundos antes de destruir el objeto.
 
     private void Start()
     {
         characterController.detectCollisions = false;
     }
 
-
-
-
     private void Update()
     {
-        // Comprueba si se presionan los botones R1 y L1 al mismo tiempo en el mando.
-        if (Gamepad.current != null &&
-            Gamepad.current.buttonNorth.isPressed || Keyboard.current.fKey.isPressed)
+        if (spawnedObject == null)
         {
-            if (!buttonsPressed)
+            // Si no hay un objeto spawnado, verifica si puedes spawnear uno.
+            if (Input_Manager._INPUT_MANAGER.GetCapyPress())
             {
-                buttonsPressed = true;
-                Capy();
+                SpawnCapyObject();
             }
         }
-        else
+
+        // Verifica si el objeto ha estado presente por más de destroyDelay segundos.
+        if (spawnedObject != null && Time.time - spawnTime >= destroyDelay)
         {
-            buttonsPressed = false;
+            Destroy(spawnedObject);
+            spawnedObject = null; // Marcar el objeto como destruido
         }
-
-
     }
 
-    private void Capy()
+    private void SpawnCapyObject()
     {
         if (objectToSpawn != null)
         {
-            // Instancia el objeto en la posición actual del personaje 
-            GameObject spawnedObject = Instantiate(objectToSpawn, transform.position + vc, transform.rotation);
-            
-            // Destruye el objeto después del tiempo especificado.
-            Destroy(spawnedObject, destroyDelay);
+            // Instancia el nuevo objeto en la posición actual del personaje.
+            spawnedObject = Instantiate(objectToSpawn, transform.position + vc, transform.rotation);
+            spawnTime = Time.time; // Registra el tiempo de creación.
         }
     }
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
-        if (hit.collider.tag == "Capy")
+        if (hit.collider.CompareTag("Capy"))
         {
-            Debug.Log("Entra");
-            characterController.SimpleMove(Vector3.up * 2000f * Time.deltaTime);
+            characterController.Move(bounceDirection * bounceForce);
         }
     }
-
-
-
-
-
-
 }

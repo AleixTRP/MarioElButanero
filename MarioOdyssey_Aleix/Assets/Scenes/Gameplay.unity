@@ -250,6 +250,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 803baebd013a581469238847adb098fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  velocityXZ: 5
   initialJumpForce: 8
   jumpForceIncrement: 2
   currentJump: 1
@@ -314,7 +315,7 @@ MonoBehaviour:
   objectToSpawn: {fileID: 1357448446362143235, guid: f971c3cb516a45549957fbefcd41c836, type: 3}
   destroyDelay: 5
   vc: {x: 0, y: 0, z: 3}
-  imapct: {x: 0, y: 50, z: 0}
+  imapct: {x: 0, y: 1, z: 0}
   characterController: {fileID: 33510165}
 --- !u!1 &80463138
 GameObject:
@@ -422,7 +423,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 33510164}
-  targetDistance: 5
+  targetDistance: 8
   cameraLerp: 6
 --- !u!1 &82338157 stripped
 GameObject:

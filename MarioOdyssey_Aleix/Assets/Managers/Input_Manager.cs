@@ -11,13 +11,17 @@ public class Input_Manager : MonoBehaviour
     public static Input_Manager _INPUT_MANAGER;
 
     private float timeSinceJumpPressed = 0f;
-  
+
 
     private Vector2 leftAxisValue = Vector2.zero;
-   
+
     private Vector2 cam = Vector2.zero;
 
     private float crouch = 0f;
+
+    private float capy = 0f;
+   
+    private float spawn = 0f;
 
 
     private void Awake()
@@ -34,6 +38,8 @@ public class Input_Manager : MonoBehaviour
             playerInputs.Character.Move.performed += LeftAxisUpdate;
             playerInputs.Character.Camera.performed += CameraMovement;
             playerInputs.Character.Crouch.performed += CrouchMovement;
+            playerInputs.Character.Capy.performed += CapyPress;
+            playerInputs.Character.Spawn.performed += SpawnPress;
             _INPUT_MANAGER = this;
             DontDestroyOnLoad(this);
         }
@@ -44,6 +50,11 @@ public class Input_Manager : MonoBehaviour
         timeSinceJumpPressed += Time.deltaTime;
 
         crouch += Time.deltaTime;
+
+        capy += Time.deltaTime;
+
+        spawn += Time.deltaTime;
+
         InputSystem.Update();
 
     }
@@ -60,17 +71,17 @@ public class Input_Manager : MonoBehaviour
 
     private void LeftAxisUpdate(InputAction.CallbackContext context)
     {
-        
-       leftAxisValue = context.ReadValue<Vector2>();
-     
-    }   
+
+        leftAxisValue = context.ReadValue<Vector2>();
+
+    }
 
     public Vector2 GetLeftAxisValue()
     {
-         return this.leftAxisValue; 
+        return this.leftAxisValue;
     }
-    
-  private void CameraMovement(InputAction.CallbackContext context)
+
+    private void CameraMovement(InputAction.CallbackContext context)
     {
 
         cam = context.ReadValue<Vector2>();
@@ -92,8 +103,25 @@ public class Input_Manager : MonoBehaviour
         return this.crouch == 0f;
     }
 
+    private void CapyPress(InputAction.CallbackContext context)
+    {
+        capy = 0f;
+    }
 
+    public bool GetCapyPress()
+    {
+        return this.capy == 0f;
 
+    }
 
+    private void SpawnPress(InputAction.CallbackContext context)
+    {
+        spawn = 0f;
+    }
 
+    public bool GetSpawnPress()
+    {
+        return this.spawn == 0f;
+
+    }
 }
