@@ -29,7 +29,7 @@ public class Gameplay_Camera : MonoBehaviour
         //rotationY += Input.GetAxis("Mouse X");
 
 
-        GetCamera.y = Mathf.Clamp(GetCamera.y, -50f, 50f);
+        GetCamera.y = Mathf.Clamp(GetCamera.y, -50f, 70f);
 
         transform.eulerAngles = new Vector3(GetCamera.y, GetCamera.x, 0);
 
