@@ -68,11 +68,13 @@ public class Character_Controller : MonoBehaviour
 
             if (isCrouching)
             {
+                animator.SetBool("crouch", true);
                 controller.height = 1.0f;
                 velocityXZ = 2.5f; // Ajusta la velocidad al agacharse (puedes usar cualquier valor que prefieras)
             }
             else
             {
+                animator.SetBool("crouch", false);
                 controller.height = 2.0f;
                 velocityXZ = 5.0f; // Restablece la velocidad al levantarse
             }
@@ -84,7 +86,8 @@ public class Character_Controller : MonoBehaviour
 
             if (Input_Manager._INPUT_MANAGER.GetSouthButtonPressed())
             {
-                animator.SetBool("isGround", true);
+                animator.SetBool("isGround", false);
+
                 finalVelocity.y = initialJumpForce;
                 initialJumpForce += jumpForceIncrement;
                 currentJump++;
@@ -97,15 +100,12 @@ public class Character_Controller : MonoBehaviour
             }
             else
             {
-                // El personaje está en el suelo y no está saltando, asegúrate de que la animación refleje esto
+
                 animator.SetBool("isGround", true);
             }
         }
         else
         {
-            // El personaje no está en el suelo, así que está en el aire
-            animator.SetBool("isGround", false);
-
             finalVelocity.y -= gravity * Time.deltaTime;
             coyoteTime -= Time.deltaTime;
         }
