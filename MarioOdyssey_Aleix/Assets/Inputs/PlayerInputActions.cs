@@ -228,6 +228,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
+                    ""id"": ""d4f8043e-a6ff-4e20-a9e7-e61c84c454f7"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Crouch"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
                     ""id"": ""4de981fc-367d-47ab-aade-3b8d7d4f9541"",
                     ""path"": ""<Gamepad>/leftShoulder"",
                     ""interactions"": """",

@@ -35,6 +35,10 @@ public class Character_Controller : MonoBehaviour
 
     private Animator animator;
 
+    
+
+
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
@@ -65,6 +69,7 @@ public class Character_Controller : MonoBehaviour
         if (Input_Manager._INPUT_MANAGER.GetCrouchMovement())
         {
             isCrouching = !isCrouching;
+            animator.SetBool("crouch", false);
 
             if (isCrouching)
             {
@@ -90,6 +95,7 @@ public class Character_Controller : MonoBehaviour
 
                 finalVelocity.y = initialJumpForce;
                 initialJumpForce += jumpForceIncrement;
+                animator.SetInteger("jump", currentJump + 1);
                 currentJump++;
 
                 if (currentJump > maxJumps)
