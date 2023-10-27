@@ -33,10 +33,13 @@ public class Character_Controller : MonoBehaviour
 
     private bool isCrouching = false;
 
+    private Animator animator;
+
     private void Awake()
     {
         controller = GetComponent<CharacterController>();
         controller.height = 2.0f; // Altura normal del personaje
+        animator = GetComponent<Animator>();
     }
 
     private void Update()
@@ -51,6 +54,10 @@ public class Character_Controller : MonoBehaviour
         // Calcular velocidad XZ
         finalVelocity.x = direction.x * velocityXZ;
         finalVelocity.z = direction.z * velocityXZ;
+
+        float speed = finalVelocity.z;
+
+        animator.SetFloat("velocity", speed);
 
         // Asignar dirección Y
         direction.y = -1f;
@@ -77,25 +84,43 @@ public class Character_Controller : MonoBehaviour
 
             if (Input_Manager._INPUT_MANAGER.GetSouthButtonPressed())
             {
+                animator.SetBool("isGround", true);
                 finalVelocity.y = initialJumpForce;
                 initialJumpForce += jumpForceIncrement;
                 currentJump++;
 
                 if (currentJump > maxJumps)
                 {
-                    initialJumpForce = 8f; // Restablecer la fuerza del primer salto
+                    initialJumpForce = 8f;
                     currentJump = 1;
                 }
+            }
+            else
+            {
+                // El personaje está en el suelo y no está saltando, asegúrate de que la animación refleje esto
+                animator.SetBool("isGround", true);
             }
         }
         else
         {
+            // El personaje no está en el suelo, así que está en el aire
+            animator.SetBool("isGround", false);
+
             finalVelocity.y -= gravity * Time.deltaTime;
             coyoteTime -= Time.deltaTime;
+        }
+        if (finalVelocity.y < -0.1f)
+        {
+            animator.SetBool("fall", true);
+        }
+        else
+        {
+            animator.SetBool("fall", false);
         }
 
         controller.Move(finalVelocity * Time.deltaTime);
     }
 }
+
 
 
