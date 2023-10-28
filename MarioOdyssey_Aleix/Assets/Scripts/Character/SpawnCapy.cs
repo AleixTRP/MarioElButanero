@@ -20,10 +20,10 @@ public class SpawnCapy : MonoBehaviour
     [SerializeField]
     private CharacterController characterController;
 
-    private Vector3 bounceDirection = Vector3.up;
+    private Vector3 bounceDirection =  new Vector3(0,3,0);
    
     [SerializeField]
-    private float bounceForce = 20f;
+    private float bounceForce = 1f;
 
     [SerializeField]
     private float destroyDelay = 5f; // Tiempo en segundos antes de destruir el objeto.
@@ -67,6 +67,9 @@ public class SpawnCapy : MonoBehaviour
         if (hit.collider.CompareTag("Capy"))
         {
             characterController.Move(bounceDirection * bounceForce);
+          
+            
         }
+       
     }
 }

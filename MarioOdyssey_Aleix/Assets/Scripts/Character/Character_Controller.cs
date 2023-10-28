@@ -35,8 +35,9 @@ public class Character_Controller : MonoBehaviour
 
     private Animator animator;
 
-    
+    private float acceleration = 5f;
 
+    private float speedCameraX = 0.2f;
 
 
     private void Awake()
@@ -44,24 +45,51 @@ public class Character_Controller : MonoBehaviour
         controller = GetComponent<CharacterController>();
         controller.height = 2.0f; // Altura normal del personaje
         animator = GetComponent<Animator>();
+
     }
 
     private void Update()
     {
-        Vector3 direction = Quaternion.Euler(0f, cam.transform.eulerAngles.y, 0f) * new Vector3(movementInput.x, 0f, movementInput.z);
-        direction.Normalize();
-
         Vector2 inputVector = Input_Manager._INPUT_MANAGER.GetLeftAxisValue();
         movementInput = new Vector3(inputVector.x, 0f, inputVector.y);
         movementInput.Normalize();
 
-        // Calcular velocidad XZ
-        finalVelocity.x = direction.x * velocityXZ;
-        finalVelocity.z = direction.z * velocityXZ;
+        Vector3 direction = Quaternion.Euler(0f, cam.transform.eulerAngles.y, 0f) * new Vector3(movementInput.x, 0f, movementInput.z);
+        direction.Normalize();
 
-        float speed = finalVelocity.z;
+        if (direction != Vector3.zero)
+        {
+            transform.rotation = Quaternion.LookRotation(direction);
+        }
+
+        // Calcular velocidad XZ
+        finalVelocity.x = Mathf.MoveTowards(finalVelocity.x, direction.x * velocityXZ, acceleration * Time.deltaTime);
+        finalVelocity.z = Mathf.MoveTowards(finalVelocity.z, direction.z * velocityXZ, acceleration * Time.deltaTime);
+
+        float speed = Mathf.Abs(finalVelocity.z);
+        float speedX = Mathf.Abs(finalVelocity.x);
+
+        if (speed < speedCameraX && speedX >= speedCameraX)
+        {
+            // Si la velocidad en Z es baja pero la velocidad en X es suficiente, consideramos que estamos en movimiento en la dirección X.
+            speed = Mathf.Abs(finalVelocity.x); // Usar la velocidad de X original
+            animator.SetBool("isRun", false); // Desactivar la animación de correr
+        }
+        else if (speed >= speedCameraX)
+        {
+            // La velocidad en Z es suficiente para considerar que estamos en movimiento hacia adelante.
+            speed = Mathf.Abs(finalVelocity.z); // Usar la velocidad de Z original
+            animator.SetBool("isRun", true); // Activar la animación de correr
+        }
+        else
+        {
+            // Ambas velocidades son bajas, consideramos que estamos prácticamente detenidos.
+            speed = 0.0f;
+            animator.SetBool("isRun", false); // Desactivar la animación de correr
+        }
 
         animator.SetFloat("velocity", speed);
+        animator.SetFloat("velocityX", speedX);
 
         // Asignar dirección Y
         direction.y = -1f;
@@ -75,7 +103,7 @@ public class Character_Controller : MonoBehaviour
             {
                 animator.SetBool("crouch", true);
                 controller.height = 1.0f;
-                velocityXZ = 2.5f; // Ajusta la velocidad al agacharse (puedes usar cualquier valor que prefieras)
+                velocityXZ = 2.5f; // Ajusta la velocidad al agacharse 
             }
             else
             {
@@ -95,7 +123,7 @@ public class Character_Controller : MonoBehaviour
 
                 finalVelocity.y = initialJumpForce;
                 initialJumpForce += jumpForceIncrement;
-                animator.SetInteger("jump", currentJump + 1);
+                animator.SetInteger("jump", currentJump);
                 currentJump++;
 
                 if (currentJump > maxJumps)
