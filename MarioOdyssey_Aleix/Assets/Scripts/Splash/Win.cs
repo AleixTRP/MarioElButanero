@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class SplashScreen : MonoBehaviour
+public class Win : MonoBehaviour
 {
 
   
-
-    public void SplashToMenu()
+    public void WinToSplash()
     {
-        SceneManager.LoadScene("Odysse");
+        SceneManager.LoadScene("Splash");
     }
 }

@@ -47,10 +47,10 @@ public class Character_Controller : MonoBehaviour
 
     private float flipForce = 10.0f;
 
-  
-    private float impulseY = 1.0f;
-    private float impulseX = 1.0f;
 
+    private float impulseX = 8f;
+
+    private float ducks;
 
 
 
@@ -144,7 +144,7 @@ public class Character_Controller : MonoBehaviour
             }
 
         }
-     
+
 
 
         if (controller.isGrounded)
@@ -213,23 +213,38 @@ public class Character_Controller : MonoBehaviour
     {
         if (hit.collider.CompareTag("Wall"))
         {
-         
-            Vector3 wallImpulse = new Vector3(impulseX, impulseY, 0);
-            finalVelocity += wallImpulse;
+              if (!controller.isGrounded)
+                {
+                    if (Input_Manager._INPUT_MANAGER.GetSouthButtonPressed())
+                    {
+                        finalVelocity += -transform.forward * impulseX;
+                    finalVelocity.y = impulseX;
+
+                }
+            }
         }
-        if(hit.collider.CompareTag("Water"))
+
+        if (hit.collider.CompareTag("Water"))
         {
             SceneManager.LoadScene("Odysse");
         }
         if (hit.collider.CompareTag("Duck"))
         {
-           Destroy(hit.gameObject);
-        }
+            ducks++;
+            Destroy(hit.gameObject);
 
+        }
+        if (ducks == 13)
+        {
+            SceneManager.LoadScene("Win");
+        }
     }
+}
+
+
 
  
-}
+
 
 
 

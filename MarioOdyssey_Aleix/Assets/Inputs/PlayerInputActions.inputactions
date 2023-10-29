@@ -277,6 +277,17 @@
                 },
                 {
                     "name": "",
+                    "id": "0a4d4806-c2f5-40fb-888f-6de9b087382e",
+                    "path": "<Gamepad>/dpad/up",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Dance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "285d62e9-c7f2-4b8b-9bee-bb87e42987e7",
                     "path": "<Keyboard>/x",
                     "interactions": "",

@@ -9,8 +9,13 @@ public class DanceCharacter : MonoBehaviour
 
     [SerializeField]
     private AudioClip soundClip;
+   
+ 
 
+    [SerializeField]
     private AudioSource audioSource;
+
+
 
     private bool soundPlaying = false;
 
@@ -23,13 +28,17 @@ public class DanceCharacter : MonoBehaviour
     {
         animator = GetComponent<Animator>();
         audioSource = GetComponent<AudioSource>();
+       
         characterController = GetComponent<CharacterController>();
     }
 
-        void Update()
+    
+    void Update()
         {
-            if (Input_Manager._INPUT_MANAGER.GetDanceMove() && !soundPlaying)
+       
+        if (Input_Manager._INPUT_MANAGER.GetDanceMove() && !soundPlaying)
             {
+
                 isDancing = true;
                 animator.SetBool("isDance", true);
                 soundPlaying = true;
