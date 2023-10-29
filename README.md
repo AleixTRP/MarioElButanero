@@ -14,4 +14,3 @@ Mando:
 -X salta
 -Triangulo Cappy
 -Click Joystic y cuadrado salto agacharse
-- R1 y L1 spawn plataforma.
