@@ -5,11 +5,10 @@ using UnityEngine.SceneManagement;
 
 public class SplashScreen : MonoBehaviour
 {
-    [SerializeField]
-    private string sceneName;
+
 
     public void SplashToMenu()
     {
-        SceneManager.LoadScene(sceneName);
+        SceneManager.LoadScene("Odysse");
     }
 }

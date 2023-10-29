@@ -23,6 +23,8 @@ public class Input_Manager : MonoBehaviour
    
     private float spawn = 0f;
 
+    private float dance = 0f;
+
 
     private void Awake()
     {
@@ -40,6 +42,8 @@ public class Input_Manager : MonoBehaviour
             playerInputs.Character.Crouch.performed += CrouchMovement;
             playerInputs.Character.Capy.performed += CapyPress;
             playerInputs.Character.Spawn.performed += SpawnPress;
+            playerInputs.Character.Dance.performed += DanceMove;
+
             _INPUT_MANAGER = this;
             DontDestroyOnLoad(this);
         }
@@ -54,6 +58,8 @@ public class Input_Manager : MonoBehaviour
         capy += Time.deltaTime;
 
         spawn += Time.deltaTime;
+
+        dance += Time.deltaTime;
 
         InputSystem.Update();
 
@@ -123,5 +129,15 @@ public class Input_Manager : MonoBehaviour
     {
         return this.spawn == 0f;
 
+    }
+
+    private void DanceMove(InputAction.CallbackContext context)
+    {
+        dance = 0f;
+    }
+
+    public bool GetDanceMove()
+    {
+        return this.dance == 0f;
     }
 }

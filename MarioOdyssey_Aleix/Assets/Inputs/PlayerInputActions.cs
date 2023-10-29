@@ -80,6 +80,15 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": ""Tap"",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Dance"",
+                    ""type"": ""Button"",
+                    ""id"": ""90f2d3ee-a8e2-43dd-ab28-dfcfd59d543b"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -258,6 +267,17 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Spawn"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2e3d74de-6394-49c4-819d-f021cd7c4514"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Dance"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -272,6 +292,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Character_Camera = m_Character.FindAction("Camera", throwIfNotFound: true);
         m_Character_Crouch = m_Character.FindAction("Crouch", throwIfNotFound: true);
         m_Character_Spawn = m_Character.FindAction("Spawn", throwIfNotFound: true);
+        m_Character_Dance = m_Character.FindAction("Dance", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -339,6 +360,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Camera;
     private readonly InputAction m_Character_Crouch;
     private readonly InputAction m_Character_Spawn;
+    private readonly InputAction m_Character_Dance;
     public struct CharacterActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -349,6 +371,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Camera => m_Wrapper.m_Character_Camera;
         public InputAction @Crouch => m_Wrapper.m_Character_Crouch;
         public InputAction @Spawn => m_Wrapper.m_Character_Spawn;
+        public InputAction @Dance => m_Wrapper.m_Character_Dance;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -376,6 +399,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Spawn.started += instance.OnSpawn;
             @Spawn.performed += instance.OnSpawn;
             @Spawn.canceled += instance.OnSpawn;
+            @Dance.started += instance.OnDance;
+            @Dance.performed += instance.OnDance;
+            @Dance.canceled += instance.OnDance;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -398,6 +424,9 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Spawn.started -= instance.OnSpawn;
             @Spawn.performed -= instance.OnSpawn;
             @Spawn.canceled -= instance.OnSpawn;
+            @Dance.started -= instance.OnDance;
+            @Dance.performed -= instance.OnDance;
+            @Dance.canceled -= instance.OnDance;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -423,5 +452,6 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCamera(InputAction.CallbackContext context);
         void OnCrouch(InputAction.CallbackContext context);
         void OnSpawn(InputAction.CallbackContext context);
+        void OnDance(InputAction.CallbackContext context);
     }
 }
