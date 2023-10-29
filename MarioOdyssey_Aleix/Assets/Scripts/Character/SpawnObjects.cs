@@ -13,6 +13,8 @@ public class SpawnObjects : MonoBehaviour
 
     private bool buttonsPressed = false;
 
+    
+
     private void Update()
     {
         // Comprueba si se presionan los botones R1 y L1 al mismo tiempo en el mando.

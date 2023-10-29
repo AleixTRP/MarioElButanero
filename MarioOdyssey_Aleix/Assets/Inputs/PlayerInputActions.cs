@@ -89,6 +89,24 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""JumpF"",
+                    ""type"": ""Button"",
+                    ""id"": ""a8c38c29-6d0d-4eaf-a88a-424b4699c453"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""JumpB"",
+                    ""type"": ""Button"",
+                    ""id"": ""41de2f34-a865-443e-97bf-b4f472169a97"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -278,6 +296,50 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
                     ""action"": ""Dance"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""285d62e9-c7f2-4b8b-9bee-bb87e42987e7"",
+                    ""path"": ""<Keyboard>/x"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpF"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c579dfb3-aaaf-41c0-b624-f5480d642701"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpF"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""9dfef9f6-d076-4e29-920e-c4ba93fb6e71"",
+                    ""path"": ""<Keyboard>/c"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""3598a460-cb68-4d6a-a6b7-28d7232ab7f4"",
+                    ""path"": ""<Gamepad>/rightStickPress"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""JumpB"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -293,6 +355,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         m_Character_Crouch = m_Character.FindAction("Crouch", throwIfNotFound: true);
         m_Character_Spawn = m_Character.FindAction("Spawn", throwIfNotFound: true);
         m_Character_Dance = m_Character.FindAction("Dance", throwIfNotFound: true);
+        m_Character_JumpF = m_Character.FindAction("JumpF", throwIfNotFound: true);
+        m_Character_JumpB = m_Character.FindAction("JumpB", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -361,6 +425,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Character_Crouch;
     private readonly InputAction m_Character_Spawn;
     private readonly InputAction m_Character_Dance;
+    private readonly InputAction m_Character_JumpF;
+    private readonly InputAction m_Character_JumpB;
     public struct CharacterActions
     {
         private @PlayerInputActions m_Wrapper;
@@ -372,6 +438,8 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         public InputAction @Crouch => m_Wrapper.m_Character_Crouch;
         public InputAction @Spawn => m_Wrapper.m_Character_Spawn;
         public InputAction @Dance => m_Wrapper.m_Character_Dance;
+        public InputAction @JumpF => m_Wrapper.m_Character_JumpF;
+        public InputAction @JumpB => m_Wrapper.m_Character_JumpB;
         public InputActionMap Get() { return m_Wrapper.m_Character; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -402,6 +470,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dance.started += instance.OnDance;
             @Dance.performed += instance.OnDance;
             @Dance.canceled += instance.OnDance;
+            @JumpF.started += instance.OnJumpF;
+            @JumpF.performed += instance.OnJumpF;
+            @JumpF.canceled += instance.OnJumpF;
+            @JumpB.started += instance.OnJumpB;
+            @JumpB.performed += instance.OnJumpB;
+            @JumpB.canceled += instance.OnJumpB;
         }
 
         private void UnregisterCallbacks(ICharacterActions instance)
@@ -427,6 +501,12 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
             @Dance.started -= instance.OnDance;
             @Dance.performed -= instance.OnDance;
             @Dance.canceled -= instance.OnDance;
+            @JumpF.started -= instance.OnJumpF;
+            @JumpF.performed -= instance.OnJumpF;
+            @JumpF.canceled -= instance.OnJumpF;
+            @JumpB.started -= instance.OnJumpB;
+            @JumpB.performed -= instance.OnJumpB;
+            @JumpB.canceled -= instance.OnJumpB;
         }
 
         public void RemoveCallbacks(ICharacterActions instance)
@@ -453,5 +533,7 @@ public partial class @PlayerInputActions: IInputActionCollection2, IDisposable
         void OnCrouch(InputAction.CallbackContext context);
         void OnSpawn(InputAction.CallbackContext context);
         void OnDance(InputAction.CallbackContext context);
+        void OnJumpF(InputAction.CallbackContext context);
+        void OnJumpB(InputAction.CallbackContext context);
     }
 }

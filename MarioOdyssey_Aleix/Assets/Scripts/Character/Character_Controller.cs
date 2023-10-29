@@ -2,7 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 
 public class Character_Controller : MonoBehaviour
 {
@@ -20,10 +22,10 @@ public class Character_Controller : MonoBehaviour
     private float jumpForceIncrement = 2f; // Incremento de fuerza para los saltos posteriores
 
     [SerializeField]
-    private int currentJump = 1; // Número de salto actual
+    private int currentJump = 1; // Nï¿½mero de salto actual
 
     [SerializeField]
-    private int maxJumps = 3; // Número máximo de saltos grandes
+    private int maxJumps = 3; // Nï¿½mero mï¿½ximo de saltos grandes
 
     private float coyoteTime;
     private Vector3 movementInput = Vector3.zero;
@@ -38,6 +40,18 @@ public class Character_Controller : MonoBehaviour
     private float acceleration = 5f;
 
     private float speedCameraX = 0.2f;
+
+    private float customImpulse = 20f;
+
+    private float platformImpulse = 30f;
+
+    private float flipForce = 10.0f;
+
+  
+    private float impulseY = 1.0f;
+    private float impulseX = 1.0f;
+
+
 
 
     private void Awake()
@@ -71,27 +85,27 @@ public class Character_Controller : MonoBehaviour
 
         if (speed < speedCameraX && speedX >= speedCameraX)
         {
-            // Si la velocidad en Z es baja pero la velocidad en X es suficiente, consideramos que estamos en movimiento en la dirección X.
+
             speed = Mathf.Abs(finalVelocity.x); // Usar la velocidad de X original
-            animator.SetBool("isRun", false); // Desactivar la animación de correr
+            animator.SetBool("isRun", false); // Desactivar la animaciï¿½n de correr
         }
         else if (speed >= speedCameraX)
         {
-            // La velocidad en Z es suficiente para considerar que estamos en movimiento hacia adelante.
+
             speed = Mathf.Abs(finalVelocity.z); // Usar la velocidad de Z original
-            animator.SetBool("isRun", true); // Activar la animación de correr
+            animator.SetBool("isRun", true); // Activar la animaciï¿½n de correr
         }
         else
         {
-            // Ambas velocidades son bajas, consideramos que estamos prácticamente detenidos.
+
             speed = 0.0f;
-            animator.SetBool("isRun", false); // Desactivar la animación de correr
+            animator.SetBool("isRun", false); // Desactivar la animaciï¿½n de correr
         }
 
         animator.SetFloat("velocity", speed);
         animator.SetFloat("velocityX", speedX);
 
-        // Asignar dirección Y
+        // Asignar direcciï¿½n Y
         direction.y = -1f;
 
         if (Input_Manager._INPUT_MANAGER.GetCrouchMovement())
@@ -101,17 +115,37 @@ public class Character_Controller : MonoBehaviour
 
             if (isCrouching)
             {
+
                 animator.SetBool("crouch", true);
                 controller.height = 1.0f;
-                velocityXZ = 2.5f; // Ajusta la velocidad al agacharse 
+                velocityXZ = 2.5f;
+
             }
+
             else
             {
                 animator.SetBool("crouch", false);
                 controller.height = 2.0f;
-                velocityXZ = 5.0f; // Restablece la velocidad al levantarse
+                velocityXZ = 5.0f;
             }
+
         }
+
+        if (controller.isGrounded && isCrouching)
+        {
+            if (Input_Manager._INPUT_MANAGER.GetJumpBack())
+            {
+                LargeJump();
+            }
+
+            if (Input_Manager._INPUT_MANAGER.GetJumpFront())
+            {
+                BackFlip();
+            }
+
+        }
+     
+
 
         if (controller.isGrounded)
         {
@@ -154,6 +188,47 @@ public class Character_Controller : MonoBehaviour
 
         controller.Move(finalVelocity * Time.deltaTime);
     }
+    public void CappyImpulse(Vector3 direction)
+    {
+        finalVelocity.y = customImpulse;
+    }
+
+    public void PlatformImpulse(Vector3 direction)
+    {
+        finalVelocity.y = platformImpulse;
+    }
+
+    private void LargeJump()
+    {
+        finalVelocity += -transform.forward * flipForce;
+        finalVelocity.y = flipForce;
+
+    }
+    private void BackFlip()
+    {
+        finalVelocity += transform.forward * flipForce;
+        finalVelocity.y = flipForce;
+    }
+    private void OnControllerColliderHit(ControllerColliderHit hit)
+    {
+        if (hit.collider.CompareTag("Wall"))
+        {
+         
+            Vector3 wallImpulse = new Vector3(impulseX, impulseY, 0);
+            finalVelocity += wallImpulse;
+        }
+        if(hit.collider.CompareTag("Water"))
+        {
+            SceneManager.LoadScene("Odysse");
+        }
+        if (hit.collider.CompareTag("Duck"))
+        {
+           Destroy(hit.gameObject);
+        }
+
+    }
+
+ 
 }
 
 

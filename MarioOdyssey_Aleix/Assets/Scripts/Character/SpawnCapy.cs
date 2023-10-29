@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.InputSystem.XR;
 
 public class SpawnCapy : MonoBehaviour
 {
@@ -11,25 +12,30 @@ public class SpawnCapy : MonoBehaviour
 
 
     private GameObject spawnedObject; // Almacena la referencia al objeto spawnado.
-   
+
     private float spawnTime; // Tiempo de creación del objeto
-   
+
     [SerializeField]
     private Vector3 vc = new Vector3(0, 0, 3);
 
     [SerializeField]
     private CharacterController characterController;
 
-    private Vector3 bounceDirection =  new Vector3(0,3,0);
-   
-    [SerializeField]
-    private float bounceForce = 1f;
-
     [SerializeField]
     private float destroyDelay = 5f; // Tiempo en segundos antes de destruir el objeto.
 
+    [SerializeField]
+    private float spawnDistance = 3f;
+
+
+
+
+    
+
+
     private void Start()
     {
+       
         characterController.detectCollisions = false;
     }
 
@@ -56,20 +62,25 @@ public class SpawnCapy : MonoBehaviour
     {
         if (objectToSpawn != null)
         {
-            // Instancia el nuevo objeto en la posición actual del personaje.
-            spawnedObject = Instantiate(objectToSpawn, transform.position + vc, transform.rotation);
+            Vector3 spawnPosition = transform.position + spawnDistance * transform.forward;
+            spawnedObject = Instantiate(objectToSpawn, spawnPosition, transform.rotation);
             spawnTime = Time.time; // Registra el tiempo de creación.
         }
     }
 
+
+
+
     private void OnControllerColliderHit(ControllerColliderHit hit)
     {
+        Character_Controller characterController = GetComponent<Character_Controller>();
+       
         if (hit.collider.CompareTag("Capy"))
         {
-            characterController.Move(bounceDirection * bounceForce);
-          
+            Vector3 customDirection = new Vector3(0.0f, 30f, 0.0f);
+
             
+            characterController.CappyImpulse(customDirection);
         }
-       
     }
 }

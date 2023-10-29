@@ -25,6 +25,10 @@ public class Input_Manager : MonoBehaviour
 
     private float dance = 0f;
 
+    private float jumpB = 0f;
+
+    private float jumpF = 0f;
+
 
     private void Awake()
     {
@@ -43,6 +47,8 @@ public class Input_Manager : MonoBehaviour
             playerInputs.Character.Capy.performed += CapyPress;
             playerInputs.Character.Spawn.performed += SpawnPress;
             playerInputs.Character.Dance.performed += DanceMove;
+            playerInputs.Character.JumpB.performed += JumpBack;
+            playerInputs.Character.JumpF.performed += JumpFront;
 
             _INPUT_MANAGER = this;
             DontDestroyOnLoad(this);
@@ -60,6 +66,10 @@ public class Input_Manager : MonoBehaviour
         spawn += Time.deltaTime;
 
         dance += Time.deltaTime;
+
+        jumpB += Time.deltaTime;
+
+        jumpF += Time.deltaTime;
 
         InputSystem.Update();
 
@@ -140,4 +150,25 @@ public class Input_Manager : MonoBehaviour
     {
         return this.dance == 0f;
     }
+
+    private void  JumpBack(InputAction.CallbackContext context)
+    {
+        jumpB = 0f;
+    }
+
+    public bool GetJumpBack()
+    {
+        return this.jumpB == 0f;
+    }
+
+    private void JumpFront(InputAction.CallbackContext context)
+    {
+        jumpF = 0f;
+    }
+
+    public bool GetJumpFront()
+    {
+        return this.jumpF == 0f;
+    }
+
 }

@@ -6,6 +6,10 @@ TagManager:
   tags:
   - Capy
   - Butanero
+  - Platform
+  - Wall
+  - Water
+  - Duck
   layers:
   - Default
   - TransparentFX
